@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎮 Tiny Games</title>
+  <style>
+    :root {
+      --bg: #fef9f0;
+      --primary: #ff6b6b;
+      --secondary: #4ecdc4;
+      --accent: #ffe66d;
+      --purple: #a29bfe;
+      --green: #55efc4;
+      --text: #2d3436;
+      --card-shadow: 0 8px 24px rgba(0,0,0,0.10);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      padding: 40px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      top: -150px; left: -100px;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      bottom: -120px; right: -60px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #fff;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 1;
+    }
+    header p {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.15rem;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Wave divider ── */
+    .wave {
+      display: block;
+      margin-top: -2px;
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+    }
+    .wave svg { display: block; }
+
+    /* ── Main ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title span { font-size: 1.8rem; }
+
+    /* ── Game grid ── */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    /* ── Game card ── */
+    .game-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      cursor: pointer;
+    }
+    .game-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+    }
+    .game-card:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 4px;
+    }
+
+    .card-banner {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+    }
+
+    .card-body {
+      padding: 20px 22px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card-body h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .card-body p {
+      font-size: 0.92rem;
+      color: #636e72;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-tag {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 6px;
+      align-self: flex-start;
+    }
+
+    /* Banner colour variants — add more as needed */
+    .color-red    { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+    .color-teal   { background: linear-gradient(135deg, #4ecdc4, #00b894); }
+    .color-yellow { background: linear-gradient(135deg, #ffe66d, #fdcb6e); }
+    .color-purple { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+    .color-blue   { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+    .color-green  { background: linear-gradient(135deg, #55efc4, #00b894); }
+
+    /* ── "Add new game" card ── */
+    .add-card {
+      background: #fff;
+      border: 3px dashed #d0d0d0;
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 40px 20px;
+      color: #aaa;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+      min-height: 240px;
+    }
+    .add-card .plus {
+      font-size: 3rem;
+      line-height: 1;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.85rem;
+      color: #b2bec3;
+    }
+    footer a { color: var(--secondary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🎮 Tiny Games</h1>
+    <p>Fun games made just for you!</p>
+  </header>
+
+  <div class="wave">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#fef9f0" d="M0,60 C360,0 1080,80 1440,20 L1440,60 Z"/>
+    </svg>
+  </div>
+
+  <main>
+    <p class="section-title"><span>🕹️</span> Choose a Game</p>
+
+    <div class="games-grid">
+
+      <!--
+        ══════════════════════════════════════════════
+        HOW TO ADD A GAME
+        ══════════════════════════════════════════════
+        1. Copy one <a class="game-card"> block below.
+        2. Set href to your game URL:
+           https://scibot.github.io/GAME-REPO-NAME/
+        3. Change the emoji, title, description, and tag.
+        4. Pick a banner colour class (color-red, color-teal,
+           color-yellow, color-purple, color-blue, color-green).
+        ══════════════════════════════════════════════
+      -->
+
+      <a class="game-card" href="https://scibot.github.io/tic-tac-toe/" target="_blank" rel="noopener">
+        <div class="card-banner color-red">⭕</div>
+        <div class="card-body">
+          <h2>Tic Tac Toe</h2>
+          <p>The classic X's and O's! Play against a friend and get three in a row to win.</p>
+          <span class="card-tag" style="background:#ffe0e0;color:#ee5a24;">Strategy</span>
+        </div>
+      </a>
+
+      <a class="game-card" href="https://scibot.github.io/Tux-Typing/" target="_blank" rel="noopener">
+        <div class="card-banner color-teal">⌨️</div>
+        <div class="card-body">
+          <h2>Tux Typing</h2>
+          <p>Help Tux the penguin catch falling letters! A fun way to learn to type faster.</p>
+          <span class="card-tag" style="background:#d0f5f0;color:#00b894;">Typing</span>
+        </div>
+      </a>
+
+      <a class="game-card" href="https://scibot.github.io/Finding-Waldo/" target="_blank" rel="noopener">
+        <div class="card-banner color-blue">🔍</div>
+        <div class="card-body">
+          <h2>Finding Waldo</h2>
+          <p>Can you spot Waldo hiding in the crowd? Search carefully — he's tricky!</p>
+          <span class="card-tag" style="background:#d6eaff;color:#0984e3;">Search</span>
+        </div>
+      </a>
+
+      <!-- Placeholder "add new game" slot -->
+      <div class="add-card">
+        <div class="plus">＋</div>
+        More games coming soon!
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    Made with ❤️ using <a href="https://claude.ai" target="_blank">Claude</a> &amp;
+    <a href="https://pages.github.com" target="_blank">GitHub Pages</a>
+  </footer>
+
+</body>
+</html>
